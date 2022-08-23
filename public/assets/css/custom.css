@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'PKAngThong';
+    src: url('../fonts/PKAngThongMedium.ttf');
+}
+
+body {
+    /* font-family: 'IBM Plex Sans Thai', sans-serif; */
+    font-family: 'PKAngThong', sans-serif;
+}
+
+.mynav{
+    background-color: darkmagenta;
+}
