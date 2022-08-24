@@ -13,3 +13,4 @@ Route::get('login', [HomeController::class, 'login']);
 // Backend Route
 Route::get('backend/dashboard', [BackendController::class, 'dashboard']);
 Route::get('backend/employees', [BackendController::class, 'employees']);
+Route::get('backend/employeelist', [BackendController::class, 'employeelist']);

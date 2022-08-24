@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\Models\Employee;
 
 class BackendController extends Controller
 {
@@ -73,4 +74,18 @@ class BackendController extends Controller
 
        return $employees;
     }
+
+    public function employeelist(){
+        // อ่านข้อมูลทั้งหมดจากตาราง employees
+        // $employees = Employee::all();
+        // การอ่านแบบแบ่งหน้าข้อมูล
+        $employees = Employee::orderBy('id','desc')->paginate(25);
+        // อ่านแบบระบุเงื่อนไข
+        // $employees = Employee::where('age','>','18')->orderBy('age')->get();
+
+        // การส่งข้อมูลที่ได้ไปยัง view
+
+        return view('backend.pages.employeelist', compact('employees'));
+    }
+
 }
