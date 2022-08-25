@@ -39,5 +39,8 @@
     </div>
 
     @include('backend.includes.foot')
+
+    @stack('scripts')
+    
 </body>
 </html>
