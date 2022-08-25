@@ -1,4 +1,5 @@
 @extends('backend.layouts.main_template')
+@section('title') Employee List @parent @endsection
 @section('content')
 
   <section class="content-header">

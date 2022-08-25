@@ -1,4 +1,5 @@
 @extends('backend.layouts.main_template')
+@section('title') Dashboard @parent @endsection
 @section('content')
     
 <div class="content-header">
