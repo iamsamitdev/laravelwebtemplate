@@ -22,7 +22,8 @@ Route::get('login', [HomeController::class, 'login']);
 |------------------------------------------------------------------------
 */
 Route::group([
-    'prefix' => 'backend'
+    'prefix' => 'backend',
+    'middleware' => 'auth'
 ],function(){
     Route::get('/', [BackendController::class, 'dashboard']);
     Route::get('dashboard', [BackendController::class, 'dashboard']);
@@ -35,3 +36,7 @@ Route::group([
 });
 
 
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
