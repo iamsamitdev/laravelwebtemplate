@@ -1,17 +1,17 @@
 @extends('backend.layouts.main_template')
-@section('title') Add new product @parent @endsection
+@section('title') เพิ่มรายการใหม่ @parent @endsection
 @section('content')
 
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Add Product</h1>
+          <h1>เพิ่มรายการใหม่</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ url('backend') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Product List</li>
+            <li class="breadcrumb-item"><a href="{{ url('backend/products') }}">รายการสินค้า</a></li>
+            <li class="breadcrumb-item active">เพิ่มรายการใหม่</li>
           </ol>
         </div>
       </div>
@@ -80,12 +80,12 @@
                     <div class="form-group row">
                         <label for="prd_image" class="col-sm-2 col-form-label">Image</label>
                         <div class="col-sm-10">
-                            <input type="file" class="form-control" id="prd_image" name="prd_image" placeholder="Price">
+                            <input type="file" class="form-control" id="prd_image" name="prd_image">
                         </div>
                     </div>
 
                     <div class="form-group row">
-                        <label for="prd_image" class="col-sm-2 col-form-label"></label>
+                        <label class="col-sm-2 col-form-label"></label>
                         <div class="col-sm-10">
                             <input type="submit" class="btn btn-success" name="Submit" value="Submit">
                         </div>

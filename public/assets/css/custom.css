@@ -4,10 +4,14 @@
 }
 
 body {
-    /* font-family: 'IBM Plex Sans Thai', sans-serif; */
-    font-family: 'PKAngThong', sans-serif;
+    font-family: 'IBM Plex Sans Thai', sans-serif;
+    /* font-family: 'PKAngThong', sans-serif; */
 }
 
 .mynav{
     background-color: darkmagenta;
+}
+
+.nav-link{
+    font-size: 20px;
 }

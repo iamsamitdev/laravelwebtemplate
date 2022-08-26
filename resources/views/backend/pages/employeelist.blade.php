@@ -25,9 +25,6 @@
           <div class="card">
             <!-- /.card-header -->
             <div class="card-body">
-              <div class="mb-3">
-                {{ $employees->links('pagination::bootstrap-4'); }}
-              </div>
               <table id="example2" class="table table-bordered table-hover">
                 <thead>
                 <tr>
@@ -59,19 +56,6 @@
                 @endforeach
 
                 </tbody>
-                <tfoot>
-                <tr>
-                  <th>ID</th>
-                  <th>Fullname</th>
-                  <th>Gender</th>
-                  <th>Email</th>
-                  <th>Tel</th>
-                  <th>Age</th>
-                  {{-- <th>Address</th> --}}
-                  <th>Avatar</th>
-                  <th>Status</th>
-                </tr>
-                </tfoot>
               </table>
 
               <div class="mt-3">

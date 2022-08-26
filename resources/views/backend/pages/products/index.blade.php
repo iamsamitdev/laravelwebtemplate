@@ -1,17 +1,17 @@
 @extends('backend.layouts.main_template')
-@section('title') Product List @parent @endsection
+@section('title') รายการสินค้า @parent @endsection
 @section('content')
 
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
-          <h1>Product List</h1>
+          <h1>รายการสินค้า</h1>
         </div>
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="{{ url('backend') }}">Dashboard</a></li>
-            <li class="breadcrumb-item active">Product List</li>
+            <li class="breadcrumb-item"><a href="{{ url('backend') }}">หน้าแดชบอร์ด</a></li>
+            <li class="breadcrumb-item active">รายการสินค้า</li>
           </ol>
         </div>
       </div>
@@ -33,7 +33,7 @@
               @endif
 
               <div class="mb-3 text-right">
-                <a href="{{ route('products.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> Add Product</a>
+                <a href="{{ route('products.create') }}" class="btn btn-success"><i class="fa fa-plus"></i> เพิ่มรายการใหม่</a>
               </div>
 
               <table id="example2" class="table table-bordered table-hover">
@@ -57,7 +57,7 @@
                         <td>{{ $product->name }}</td>
                         <td>{{ $product->slug }}</td>
                         <td>{{ $product->price }}</td>
-                        <td><img src="{{ $product->image }}" width="50"></td>
+                        <td><img src="{{ asset('assets/backend/images/products') }}/{{$product->image}}" width="50"></td>
                         <td>{{ $product->created_at ?  \Carbon\Carbon::parse($product->created_at)->format('d/m/Y') : "" }}</td>
                         <td>{{ $product->created_at ? \Carbon\Carbon::parse($product->updated_at)->format('d/m/Y') : "" }}</td>
                         <td>
@@ -65,16 +65,16 @@
 
                             <a href="{{ 
                               route('products.show', $product->id) 
-                            }}" class="btn btn-info">View</a>
+                            }}" class="btn btn-info">ดู</a>
 
                             <a href="{{ 
                               route('products.edit', $product->id) 
-                            }}" class="btn btn-warning">Edit</a>
+                            }}" class="btn btn-warning">แก้ไข</a>
                             
                             <form method="POST" action="{{ 
                             route('products.destroy', $product->id) }}">
                               @csrf
-                              <button class="btn btn-danger" onclick="return confirm('Are you sure ?')">Delete</button>
+                              <button class="btn btn-danger" onclick="return confirm('ต้องการลบรายการหรือไม่')" style="border-bottom-left-radius: 0; border-top-left-radius: 0">ลบ</button>
                               @method('DELETE')
                             </form>
 
@@ -133,7 +133,76 @@
       "info": true,
       "autoWidth": false,
       "responsive": true,
-      "buttons": ["copy", "csv", "excel", "pdf", "print"]
+      "buttons": [
+        {
+            extend: 'copyHtml5',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 5, 6 ]
+            }
+        },
+        {
+            extend: 'csvHtml5',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 5, 6 ]
+            }
+        },
+        // {
+        //     extend: 'excelHtml5',
+        //     exportOptions: {
+        //         columns: [ 0, 1, 2, 3, 5, 6 ]
+        //     }
+        // },
+        {
+            extend: 'pdfHtml5',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 5, 6 ]
+            }
+        },
+        {
+            extend: 'print',
+            exportOptions: {
+                columns: [ 0, 1, 2, 3, 5, 6 ]
+            }
+        },
+        ,"colvis",
+      ],
+      "columnDefs": [
+      {
+        "targets": [4,7],
+        "orderable": false
+      }],
+      "language": {
+        "info": "แสดง _START_ ถึง _END_ จาก _TOTAL_ แถว",
+        "infoEmpty": "แสดงทั้งหมด 0 to 0 of 0 รายการ",
+        "zeroRecords": "ไม่พบข้อมูล",
+        "search": "ค้นหา:",
+        "paginate": {
+          "first":      "หน้าแรก",
+          "last":       "หน้าสุดท้าย",
+          "next":       "ถัดไป",
+          "previous":   "ก่อนหน้า"
+        },
+        "buttons": {
+            "collection": "ชุดข้อมูล",
+            "colvis": "การมองเห็นคอลัมน์",
+            "colvisRestore": "เรียกคืนการมองเห็น",
+            "copy": "คัดลอก",
+            "copyKeys": "กดปุ่ม Ctrl หรือ Command + C เพื่อคัดลอกข้อมูลบนตารางไปยัง Clipboard ที่เครื่องของคุณ",
+            "copySuccess": {
+                "_": "คัดลอกช้อมูลแล้ว จำนวน %d แถว",
+                "1": "คัดลอกข้อมูลแล้ว จำนวน 1 แถว"
+            },
+            "copyTitle": "คัดลอกไปยังคลิปบอร์ด",
+            "csv": "CSV",
+            "excel": "Excel",
+            "pageLength": {
+                "_": "แสดงข้อมูล %d แถว",
+                "-1": "แสดงข้อมูลทั้งหมด"
+            },
+            "pdf": "PDF",
+            "print": "สั่งพิมพ์"
+        },
+      }
     }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
 
   });

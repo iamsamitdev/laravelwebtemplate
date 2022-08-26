@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
-use Validator; //Class ใช้ตรวจสอบข้อมูลในฟอร์ม
+use Validator; // Class ใช้ตรวจสอบข้อมูลในฟอร์ม
+use Image; // Library สำหรับจัดการ Images
 
 class ProductController extends Controller
 {
@@ -61,13 +62,56 @@ class ProductController extends Controller
         if($validator->fails()){ // ตรวจสอบฟอร์มยังไม่ผ่าน
             return redirect()->back()->withErrors($validator)->withInput();
         }else{
+
             $data_product = array(
                 'name' => $request->prd_name,
                 'slug' => $request->prd_slug,
                 'description' => $request->prd_description,
-                'price' => $request->prd_price,
-                'image' => "https://via.placeholder.com/800x600.png/008876?text=samsung"
+                'price' => $request->prd_price
             );
+
+            // Upload Images
+            try {
+
+                // รับค่ารูปเข้ามา
+                $image = $request->file('prd_image');
+
+                // เช็คว่าต้องมีไฟล์ภาพส่งมา
+                if(!empty($image)){
+
+                    // กำหนดชื่อไฟล์ให้ไม่ซ้ำกัน
+                    $file_name = "product_" . time() . "." . $image->getClientOriginalExtension();
+
+                    // เช็คสกุลไฟล์
+                    if($image->getClientOriginalExtension() == "jpg" or $image->getClientOriginalExtension() == "png") {
+
+                        $imgwidth = 300; // ขนาดความกว้าง
+                        $folderupload = 'assets/backend/images/products';
+                        $path = $folderupload."/".$file_name;
+
+                        // Upload to folder products
+                        $img = Image::make($image->getRealPath());
+
+                        if ($img->width() > $imgwidth) {
+                            $img->resize($imgwidth, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        }
+
+                        $img->save($path);
+
+                        $data_product['image'] = $file_name;
+
+                    }else{
+                        return redirect()->back()->withErrors($validator)->withInput()->with('status', '<div class="alert alert-danger">ไฟล์ภาพไม่รองรับ อนุญาติเฉพาะ .jpg และ .png</div>');
+                    }
+
+                }
+
+            } catch (Exception $e) {
+                report($e);
+                return false;
+            }
     
             $status = Product::create($data_product);
             return redirect()->route('products.create')->with('success','Add Product Succcess');
